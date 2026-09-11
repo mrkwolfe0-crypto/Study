@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Comprehensive Java Offline Reference Manual</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --panel: #111827;
+  --panel2: #1f2937;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #38bdf8;
+  --line: #334155;
+  --code: #020617;
+  --badge-bg: #0c4a6e;
+  --badge-text: #e0f2fe;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #0b1220;
+  border-bottom: 1px solid var(--line);
+  padding: 14px 20px;
+}
+h1 {
+  font-size: 1.35rem;
+  margin: 0 0 4px;
+  color: #f8fafc;
+}
+.sub {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.wrap {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  min-height: calc(100vh - 65px);
+}
+.side {
+  border-right: 1px solid var(--line);
+  padding: 16px;
+  position: sticky;
+  top: 65px;
+  height: calc(100vh - 65px);
+  overflow-y: auto;
+  background: #0b1220;
+}
+.main {
+  padding: 24px;
+  max-width: 1100px;
+}
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #020617;
+  color: var(--text);
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+input:focus {
+  outline: 2px solid var(--accent);
+  border-color: transparent;
+}
+.navbtn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  color: var(--text);
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+.navbtn:hover {
+  background: var(--panel2);
+  color: var(--accent);
+}
+section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+h2 {
+  margin-top: 0;
+  color: #f8fafc;
+  font-size: 1.25rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+h3 {
+  color: #bae6fd;
+  font-size: 1rem;
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+.tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  margin-right: 6px;
+  font-weight: 500;
+}
+pre {
+  white-space: pre-wrap;
+  background: var(--code);
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 12px;
+  overflow-x: auto;
+  margin: 8px 0 14px;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.88rem;
+  color: #f1f5f9;
+}
+p code, td code, li code {
+  background: #1e293b;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #38bdf8;
+}
+.callout {
+  border-left: 4px solid var(--accent);
+  padding: 10px 14px;
+  background: #0b1220;
+  border-radius: 4px;
+  margin: 12px 0;
+  font-size: 0.92rem;
+}
+.practice { border-left-color: #f59e0b; }
+.warning { border-left-color: #ef4444; }
+.small { font-size: 0.85rem; color: var(--muted); }
+.hide { display: none !important; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin: 10px 0;
+}
+.card {
+  background: #0b1220;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 16px;
+  font-size: 0.88rem;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  text-align: left;
+}
+th {
+  background: #0b1220;
+  color: #bae6fd;
+}
+tr:nth-child(even) { background: #0d1527; }
+@media(max-width: 860px) {
+  .wrap { display: block; }
+  .side { position: relative; top: auto; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .main { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Java Master Reference Manual</h1>
+  <div class="sub">Comprehensive offline reference covering Language Syntax, OOP, Concurrency, Collections, I/O, and Desktop GUI (AWT/Swing).</div>
+</header>
+
+<div class="wrap">
+  <aside class="side">
+    <input id="search" placeholder="Filter topics, syntax, methods..." aria-label="Search">
+    <div id="nav"></div>
+  </aside>
+
+  <main class="main" id="content">
+
+    <section data-title="1. Structure & Compilation" data-keywords="javac bytecode class main args println comments structure">
+      <h2>1. Program Structure & Execution Flow</h2>
+      <span class="tag">Foundation</span><span class="tag">JVM</span>
+      <div class="callout">
+        Java programs reside inside classes. The source code file name must match the <code>public class</code> name followed by <code>.java</code>.
+      </div>
+      <pre><code>// HelloWorld.java
+public class HelloWorld {
+    // Execution starts at main()
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+      <h3>Compilation Pipeline</h3>
+      <pre><code>javac HelloWorld.java    // Produces HelloWorld.class (Platform-independent Bytecode)
+java HelloWorld          // Launches the Java Virtual Machine (JVM) executing the bytecode</code></pre>
+      <h3>Comments</h3>
+      <pre><code>// Single-line comment
+/* Multi-line
+   comment block */
+/** Javadoc documentation comment: parsed to generate API documentation */</code></pre>
+    </section>
+
+    <section data-title="2. Data Types & Literals" data-keywords="primitive byte short int long float double char boolean literal casting type promotion">
+      <h2>2. Data Types, Literals & Type Promotion</h2>
+      <span class="tag">Types</span><span class="tag">Variables</span>
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Bits</th><th>Range / Specification</th><th>Default</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>byte</code></td><td>8</td><td>-128 to 127</td><td>0</td></tr>
+          <tr><td><code>short</code></td><td>16</td><td>-32,768 to 32,767</td><td>0</td></tr>
+          <tr><td><code>int</code></td><td>32</td><td>-2,147,483,648 to 2,147,483,647</td><td>0</td></tr>
+          <tr><td><code>long</code></td><td>64</td><td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 (suffix <code>L</code>)</td><td>0L</td></tr>
+          <tr><td><code>float</code></td><td>32</td><td>1.4e-45 to 3.4e+38 (IEEE-754 single precision, suffix <code>f</code>)</td><td>0.0f</td></tr>
+          <tr><td><code>double</code></td><td>64</td><td>4.9e-324 to 1.8e+308 (IEEE-754 double precision)</td><td>0.0d</td></tr>
+          <tr><td><code>char</code></td><td>16</td><td>0 to 65,535 (Unicode UTF-16, unsigned)</td><td>'\u0000'</td></tr>
+          <tr><td><code>boolean</code></td><td>1</td><td><code>true</code> or <code>false</code></td><td>false</td></tr>
+        </tbody>
+      </table>
+      <h3>Numeric Literals (JDK 7+)</h3>
+      <pre><code>int bin = 0b1010_0101;       // Binary format with underscores
+int hex = 0xFF_10;           // Hexadecimal format
+long big = 1_000_000_000L;   // Underscores for readability</code></pre>
+      <h3>Type Conversion & Promotion</h3>
+      <pre><code>// Widening (Automatic)
+int num = 100;
+double d = num; 
+
+// Narrowing (Explicit Cast required; truncation occurs)
+double pi = 3.14159;
+int truncated = (int) pi;    // Evaluates to 3
+
+// Expression Type Promotion: byte, short, char -> int
+byte b1 = 40, b2 = 50;
+int result = b1 * b2;        // Promoted to int before multiplication</code></pre>
+    </section>
+
+    <section data-title="3. Complete Operator Table" data-keywords="operators arithmetic bitwise shift relational logical short circuit ternary precedence">
+      <h2>3. Complete Operators & Precedence</h2>
+      <span class="tag">Operators</span>
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Operators</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Postfix</td><td><code>expr++  expr--</code></td><td>Evaluate expression then increment/decrement</td></tr>
+          <tr><td>Unary</td><td><code>++expr  --expr  +  -  ~  !  (type)</code></td><td>Pre-increment, negation, bitwise NOT, logical NOT, cast</td></tr>
+          <tr><td>Multiplicative</td><td><code>*  /  %</code></td><td>Multiplication, division, modulus (remainder)</td></tr>
+          <tr><td>Additive</td><td><code>+  -</code></td><td>Addition, string concatenation, subtraction</td></tr>
+          <tr><td>Shift</td><td><code>&lt;&lt;  &gt;&gt;  &gt;&gt;&gt;</code></td><td>Left shift, signed right shift, unsigned right shift (zero-fill)</td></tr>
+          <tr><td>Relational</td><td><code>&lt;  &gt;  &lt;=  &gt;=  instanceof</code></td><td>Comparison checks and type inspection</td></tr>
+          <tr><td>Equality</td><td><code>==  !=</code></td><td>Equal, not equal (tests object reference equality or primitive value)</td></tr>
+          <tr><td>Bitwise / Logical</td><td><code>&amp;  ^  |</code></td><td>AND, XOR, OR (evaluates both operands)</td></tr>
+          <tr><td>Short-Circuit</td><td><code>&amp;&amp;  ||</code></td><td>Logical AND, OR (skips RHS evaluation if LHS determines outcome)</td></tr>
+          <tr><td>Ternary</td><td><code>? :</code></td><td><code>booleanExpr ? valueIfTrue : valueIfFalse</code></td></tr>
+          <tr><td>Assignment</td><td><code>=  +=  -=  *=  /=  %=  &amp;=  ^=  |=  &lt;&lt;=  &gt;&gt;=  &gt;&gt;&gt;=</code></td><td>Assign and compound assignment operations</td></tr>
+        </tbody>
+      </table>
+      <h3>Signed vs. Unsigned Shift Example</h3>
+      <pre><code>int x = -8;
+int signedShift = x >> 1;    // Preserves sign bit: returns -4
+int unsignedShift = x >>> 1;  // Fills high bit with 0: returns 2147483644</code></pre>
+    </section>
+
+    <section data-title="4. Control Flow" data-keywords="if else switch case break continue while do-while loop for-each">
+      <h2>4. Control Statements & Flow Control</h2>
+      <span class="tag">Logic</span><span class="tag">Loops</span>
+      <h3>Switch Statement (Strings & Fall-Through)</h3>
+      <pre><code>String command = "START";
+switch (command) {
+    case "START":
+        System.out.println("Starting process...");
+        break;
+    case "PAUSE":
+    case "HOLD":              // Multiple matches fall through
+        System.out.println("Pausing process...");
+        break;
+    default:
+        System.out.println("Unknown command.");
+        break;
+}</code></pre>
+      <h3>Enhanced For-Each Loop</h3>
+      <pre><code>int[] values = { 10, 20, 30, 40 };
+int total = 0;
+for (int x : values) {        // Iterates through every element sequentially
+    total += x;
+}</code></pre>
+      <h3>Labeled Break & Continue (Structured Jump)</h3>
+      <pre><code>outerLoop:
+for (int row = 0; row &lt; 5; row++) {
+    for (int col = 0; col &lt; 5; col++) {
+        if (row * col &gt; 6) {
+            break outerLoop;   // Breaks out of outer loop directly
+        }
+    }
+}</code></pre>
+    </section>
+
+    <section data-title="5. OOP: Classes, Methods & Scope" data-keywords="class object constructor this overload varargs static instance encapsulation">
+      <h2>5. OOP: Classes, Methods & Encapsulation</h2>
+      <span class="tag">OOP</span><span class="tag">Constructors</span>
+      <pre><code>public class Account {
+    // Encapsulation: Private instance variables
+    private String id;
+    private double balance;
+
+    // Static member belongs to class, shared across all instances
+    private static int totalAccounts = 0;
+
+    // Constructor with 'this' resolving variable shadowing
+    public Account(String id, double balance) {
+        this.id = id;
+        this.balance = balance;
+        totalAccounts++;
+    }
+
+    // Overloaded Constructor
+    public Account(String id) {
+        this(id, 0.0);         // Invokes constructor above
+    }
+
+    // Getters & Setters
+    public double getBalance() { return this.balance; }
+    public static int getTotalAccounts() { return totalAccounts; }
+
+    // Varargs parameter (must be the final parameter)
+    public void recordTransactions(String note, double... amounts) {
+        for (double a : amounts) {
+            this.balance += a;
+        }
+    }
+}</code></pre>
+      <div class="callout practice">
+        <b>Memory & Reference Passing:</b> Java is strictly <b>call-by-value</b>. When passing an object reference to a method, a copy of the reference address is passed. Manipulating internal attributes alters the shared object, but reassigning the reference variable itself does not affect the caller's pointer.
+      </div>
+    </section>
+
+    <section data-title="6. Inheritance & Polymorphism" data-keywords="extends super override abstract interface default implements polymorphism">
+      <h2>6. Inheritance, Abstract Classes & Interfaces</h2>
+      <span class="tag">Inheritance</span><span class="tag">Polymorphism</span>
+      <h3>Access Permissions Matrix</h3>
+      <table>
+        <thead>
+          <tr><th>Modifier</th><th>Same Class</th><th>Same Package</th><th>Subclass (Different Pkg)</th><th>World</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>public</code></td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td><code>protected</code></td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+          <tr><td><i>default (none)</i></td><td>Yes</td><td>Yes</td><td>No</td><td>No</td></tr>
+          <tr><td><code>private</code></td><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
+        </tbody>
+      </table>
+      <h3>Class Inheritance & Polymorphic Dispatch</h3>
+      <pre><code>abstract class Shape {
+    abstract double area();    // Abstract method: no body
+}
+
+interface Drawable {
+    void draw();
+    // Default method (JDK 8+)
+    default void renderDetails() {
+        System.out.println("Standard vector rendering");
+    }
+}
+
+class Circle extends Shape implements Drawable {
+    private double radius;
+    public Circle(double radius) { this.radius = radius; }
+
+    @Override
+    double area() { return Math.PI * radius * radius; }
+
+    @Override
+    public void draw() { System.out.println("Drawing circle"); }
+}
+
+// Usage: Superclass reference bound to subclass object
+Shape s = new Circle(5.0);
+System.out.println(s.area()); // Dynamic method dispatch</code></pre>
+    </section>
+
+    <section data-title="7. Strings & Characters" data-keywords="String StringBuffer StringBuilder regex split charAt substring compareTo">
+      <h2>7. Strings, Text Manipulation & Regex</h2>
+      <span class="tag">Strings</span><span class="tag">java.lang</span>
+      <div class="callout">
+        <b>String Immutability:</b> <code>String</code> objects cannot be changed in place. Use <code>StringBuilder</code> (unsynchronized, faster) or <code>StringBuffer</code> (thread-safe, synchronized) for intensive concatenation.
+      </div>
+      <pre><code>String s1 = "Java Programming";
+int len = s1.length();                    // 16
+char c = s1.charAt(2);                     // 'v'
+String sub = s1.substring(0, 4);           // "Java"
+boolean eq = s1.equalsIgnoreCase("java programming"); // true
+int comp = s1.compareTo("Kotlin");         // &lt; 0 (alphabetical distance)
+String[] parts = "A,B,C".split(",");      // ["A", "B", "C"]</code></pre>
+      <h3>StringBuilder Example</h3>
+      <pre><code>StringBuilder sb = new StringBuilder("Base");
+sb.append("Text").append(100);
+sb.insert(4, " ");                        // "Base Text100"
+sb.reverse();
+String finalStr = sb.toString();</code></pre>
+    </section>
+
+    <section data-title="8. Exception Handling" data-keywords="try catch finally throw throws try-with-resources AutoCloseable exception">
+      <h2>8. Exception Architecture & Resources</h2>
+      <span class="tag">Exceptions</span>
+      <pre><code>// Try-with-resources: automatically invokes close() on AutoCloseable items
+try (java.io.FileReader fr = new java.io.FileReader("file.txt");
+     java.util.Scanner sc = new java.util.Scanner(fr)) {
+    while (sc.hasNextLine()) {
+        System.out.println(sc.nextLine());
+    }
+} catch (java.io.FileNotFoundException e) {
+    System.err.println("File not found: " + e.getMessage());
+} catch (java.io.IOException | NumberFormatException e) {
+    // Multi-catch (JDK 7+)
+    System.err.println("I/O or parsing error: " + e.getMessage());
+} finally {
+    // Always runs regardless of exception
+}</code></pre>
+    </section>
+
+    <section data-title="9. Collections Framework" data-keywords="List ArrayList LinkedList Set HashSet TreeSet Map HashMap Iterator Collection">
+      <h2>9. Collections Framework & Maps</h2>
+      <span class="tag">java.util</span><span class="tag">Generics</span>
+      <div class="grid">
+        <div class="card">
+          <b>ArrayList vs LinkedList</b>
+          <p class="small">ArrayList gives $O(1)$ random access, slow insertions in the middle. LinkedList allows fast insertions/deletions at ends, $O(n)$ access.</p>
+        </div>
+        <div class="card">
+          <b>HashSet vs TreeSet</b>
+          <p class="small">HashSet offers unsorted, unique items via hash table. TreeSet maintains Red-Black tree sorted order ($O(\log n)$ operations).</p>
+        </div>
+      </div>
+      <pre><code>import java.util.*;
+
+// 1. List Operations
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("Alpha");
+list.add("Beta");
+list.remove(0);
+
+// 2. Set Operations (deduplication)
+Set&lt;Integer&gt; set = new HashSet&lt;&gt;();
+set.add(10);
+set.add(10); // Ignored
+
+// 3. Map Operations (Key-Value pairs)
+Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+map.put("Mark", 100);
+map.put("Alice", 95);
+
+for (Map.Entry&lt;String, Integer&gt; entry : map.entrySet()) {
+    System.out.println(entry.getKey() + ": " + entry.getValue());
+}</code></pre>
+    </section>
+
+    <section data-title="10. Multithreading & Concurrency" data-keywords="Thread Runnable synchronized volatile wait notify join isAlive lock">
+      <h2>10. Concurrency, Threads & Synchronization</h2>
+      <span class="tag">Multithreading</span>
+      <h3>Thread Creation Approaches</h3>
+      <pre><code>// Approach A: Implement Runnable (Preferred)
+class Task implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("Task executed in: " + Thread.currentThread().getName());
+    }
+}
+Thread t1 = new Thread(new Task());
+t1.start();
+t1.join(); // Waits for thread to terminate</code></pre>
+      <h3>Synchronization & Inter-thread Communication</h3>
+      <pre><code>class Counter {
+    private int count = 0;
+    // Synchronized method locks 'this' object monitor
+    public synchronized void increment() {
+        count++;
+    }
+
+    // Synchronized block
+    public void reset() {
+        synchronized(this) {
+            count = 0;
+        }
+    }
+}</code></pre>
+    </section>
+
+    <section data-title="11. Java I/O Streams" data-keywords="File FileReader FileWriter FileInputStream FileOutputStream BufferedReader Scanner">
+      <h2>11. I/O: Streams, Readers & File Operations</h2>
+      <span class="tag">java.io</span>
+      <div class="grid">
+        <div class="card">
+          <b>Byte Streams</b>
+          <p class="small"><code>InputStream</code> / <code>OutputStream</code>, <code>FileInputStream</code>. Reads raw 8-bit bytes (binaries, images).</p>
+        </div>
+        <div class="card">
+          <b>Character Streams</b>
+          <p class="small"><code>Reader</code> / <code>Writer</code>, <code>BufferedReader</code>. Handles 16-bit Unicode text translations automatically.</p>
+        </div>
+      </div>
+      <pre><code>import java.io.*;
+
+// Efficient buffered file reading
+File file = new File("data.txt");
+if (file.exists()) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
+}
+
+// File Writing
+try (BufferedWriter writer = new BufferedWriter(new FileWriter("out.txt"))) {
+    writer.write("Persisting offline text data");
+    writer.newLine();
+}</code></pre>
+    </section>
+
+    <section data-title="12. GUI: Swing & AWT Components" data-keywords="JFrame JPanel JButton JTextField JCheckBox FlowLayout BorderLayout GridLayout ActionListener">
+      <h2>12. Graphical UI: Swing & AWT Reference</h2>
+      <span class="tag">GUI</span><span class="tag">Swing</span>
+      <pre><code>import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BasicGuiApp {
+    public static void main(String[] args) {
+        // Swing GUI operations must run on Event Dispatch Thread
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("App Window");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 200);
+            frame.setLayout(new BorderLayout());
+
+            JTextField textField = new JTextField();
+            JButton button = new JButton("Submit");
+            JLabel label = new JLabel("Status: Waiting");
+
+            // Event Handling
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    label.setText("Entered: " + textField.getText());
+                }
+            });
+
+            frame.add(textField, BorderLayout.NORTH);
+            frame.add(button, BorderLayout.CENTER);
+            frame.add(label, BorderLayout.SOUTH);
+
+            frame.setVisible(true);
+        });
+    }
+}</code></pre>
+      <h3>Common Layout Managers</h3>
+      <ul>
+        <li><b>FlowLayout:</b> Places components left-to-right in natural size; wraps to new rows.</li>
+        <li><b>BorderLayout:</b> 5 designated zones: <code>NORTH</code>, <code>SOUTH</code>, <code>EAST</code>, <code>WEST</code>, <code>CENTER</code>.</li>
+        <li><b>GridLayout:</b> Arranges components into an equal-dimension matrix grid (rows, columns).</li>
+      </ul>
+    </section>
+
+    <section data-title="13. Math & Date API" data-keywords="Math abs max min pow sqrt random LocalDate LocalTime LocalDateTime">
+      <h2>13. Math, Numeric Formatting & Dates</h2>
+      <span class="tag">java.time</span><span class="tag">Math</span>
+      <pre><code>// Math Methods
+double root = Math.sqrt(49.0);          // 7.0
+double p = Math.pow(2, 8);               // 256.0
+int absolute = Math.abs(-15);           // 15
+double rand = Math.random();             // 0.0 &lt;= rand &lt; 1.0
+
+// Modern Date & Time API (java.time, JDK 8+)
+java.time.LocalDate today = java.time.LocalDate.now();
+java.time.LocalTime now = java.time.LocalTime.now();
+java.time.LocalDateTime dt = java.time.LocalDateTime.now();
+System.out.printf("Formatted Date: %s at %s%n", today, now);</code></pre>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// Build dynamic sidebar navigation links
+const sections = [...document.querySelectorAll('section')];
+const nav = document.getElementById('nav');
+
+sections.forEach((sec, idx) => {
+  sec.id = 'sec-' + idx;
+  const btn = document.createElement('button');
+  btn.className = 'navbtn';
+  btn.textContent = sec.dataset.title;
+  btn.onclick = () => sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  nav.appendChild(btn);
+});
+
+// Instant text and tag search/filter
+document.getElementById('search').addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase().trim();
+  sections.forEach((sec, idx) => {
+    const haystack = (sec.dataset.title + ' ' + (sec.dataset.keywords || '') + ' ' + sec.innerText).toLowerCase();
+    const matches = !q || haystack.includes(q);
+    sec.classList.toggle('hide', !matches);
+    nav.children[idx].classList.toggle('hide', !matches);
+  });
+});
+</script>
+</body>
+</html>
